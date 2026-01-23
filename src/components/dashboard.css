@@ -428,7 +428,9 @@ body {
 
 /* Transaction List */
 .transaction-list {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
 }
 
 .transactions {
@@ -436,6 +438,27 @@ body {
   flex-direction: column;
   gap: 20px;
   margin-top: 20px;
+  overflow-y: auto;
+  padding-right: 8px;
+  flex: 1;
+}
+
+/* Custom Scrollbar for Transactions */
+.transactions::-webkit-scrollbar {
+  width: 5px;
+}
+
+.transactions::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.transactions::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+.transactions::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
 
 .transaction-item {

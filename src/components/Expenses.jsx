@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
 import Sidebar from './Sidebar';
 import Header from './Header';
@@ -17,7 +17,7 @@ const Expenses = () => {
     const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
     const [toast, setToast] = useState(null);
 
-    const fetchTransactions = async () => {
+    const fetchTransactions = useCallback(async () => {
         try {
             const month = currentDate.getMonth() + 1;
             const year = currentDate.getFullYear();
@@ -28,11 +28,11 @@ const Expenses = () => {
         } catch (error) {
             console.error('Failed to fetch transactions:', error);
         }
-    };
+    }, [currentDate]);
 
     useEffect(() => {
         fetchTransactions();
-    }, [currentDate]);
+    }, [fetchTransactions]);
 
     const categories = useMemo(() => {
         const cats = ['All Categories', ...new Set(transactions.map(t => t.category))];
