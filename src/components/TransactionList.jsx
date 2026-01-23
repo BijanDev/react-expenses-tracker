@@ -13,10 +13,42 @@ const getIcon = (category) => {
   }
 };
 
-const TransactionList = ({ transactions }) => {
+const TransactionList = ({ transactions, onAddClick }) => {
   return (
     <div className="transaction-list card">
-      <h3>Recent Transactions</h3>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <h3 style={{ margin: 0 }}>Recent Transactions</h3>
+        <button 
+          onClick={onAddClick}
+          title="Add Daily Expense"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '28px',
+            height: '28px',
+            borderRadius: '50%',
+            backgroundColor: 'var(--active-bg)',
+            color: 'var(--primary-blue)',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '18px',
+            fontWeight: '600',
+            transition: 'all 0.2s',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.backgroundColor = 'var(--primary-blue)';
+            e.currentTarget.style.color = 'white';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.backgroundColor = 'var(--active-bg)';
+            e.currentTarget.style.color = 'var(--primary-blue)';
+          }}
+        >
+          +
+        </button>
+      </div>
       <div className="transactions">
         {transactions && transactions.length > 0 ? (
           transactions.map((transaction, index) => (

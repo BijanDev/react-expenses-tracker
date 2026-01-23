@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Wallet, PieChart, LogOut, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { api } from '../services/api';
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -37,8 +37,10 @@ const Sidebar = ({ isOpen, onClose }) => {
       <div className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <div className="logo-container">
-            <div className="logo-icon">F</div>
-            <span className="logo-text-d">FinTrack</span>
+            <div className="logo-icon-container">
+              <span className="logo-letter">S</span>
+            </div>
+            <span className="logo-text-f">Spendly</span>
           </div>
           <button className="mobile-close-btn" onClick={onClose}>
             <X size={24} />
@@ -46,18 +48,18 @@ const Sidebar = ({ isOpen, onClose }) => {
         </div>
 
         <nav className="nav-menu">
-          <button className="nav-item active">
+          <NavLink to="/dashboard" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={onClose}>
             <LayoutDashboard size={20} />
             <span>Dashboard</span>
-          </button>
-          <button className="nav-item" onClick={onClose}>
+          </NavLink>
+          <NavLink to="/expenses" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={onClose}>
             <Wallet size={20} />
             <span>Expenses</span>
-          </button>
-          <button className="nav-item" onClick={onClose}>
+          </NavLink>
+          <NavLink to="/budget" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={onClose}>
             <PieChart size={20} />
             <span>Budget & Fixed</span>
-          </button>
+          </NavLink>
         </nav>
 
         <div className="sidebar-footer">
@@ -75,6 +77,31 @@ const Sidebar = ({ isOpen, onClose }) => {
           </button>
         </div>
       </div>
+
+      <style jsx="true">{`
+        .logo-icon-container {
+          width: 32px;
+          height: 32px;
+          background: var(--active-bg);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .logo-letter {
+          color: var(--primary-blue);
+          font-weight: 800;
+          font-size: 20px;
+        }
+        .logo-text-f {
+          font-size: 20px;
+          font-weight: 700;
+          color: var(--text-main);
+        }
+        .nav-item {
+          text-decoration: none;
+        }
+      `}</style>
     </>
   );
 };

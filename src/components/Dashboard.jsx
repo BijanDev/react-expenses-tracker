@@ -8,10 +8,9 @@ import BudgetOverview from './BudgetOverview';
 import SpendingChart from './SpendingChart';
 import TransactionList from './TransactionList';
 import BudgetModal from './BudgetModal';
+import ExpenseModal from './ExpenseModal';
 import Toast from './Toast';
 import { api } from '../services/api';
-
-
 
 const Dashboard = () => {
   /* ---------------- API Integration ---------------- */
@@ -20,6 +19,7 @@ const Dashboard = () => {
   const [budget, setBudget] = useState(null);
   const [prevBudget, setPrevBudget] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
   const [toast, setToast] = useState(null);
   const [transactions, setTransactions] = useState([]);
 
@@ -51,8 +51,10 @@ const Dashboard = () => {
         setPrevBudget(null);
       }
 
-      // Fetch History
-      const historyResponse = await api.getHistory();
+      // Fetch History for the selected month/year
+      const month = currentDate.getMonth() + 1;
+      const year = currentDate.getFullYear();
+      const historyResponse = await api.getHistory({ month, year });
       if (historyResponse.history) {
         const transformedHistory = historyResponse.history.map(item => ({
           id: item.id,
@@ -160,8 +162,6 @@ const Dashboard = () => {
     }));
   }, [transactions]);
 
-
-
   return (
     <div className={`app-container ${isSidebarOpen ? 'sidebar-open' : ''}`}>
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
@@ -175,7 +175,6 @@ const Dashboard = () => {
         />
 
         <div className="dashboard-content">
-
           <div className="top-cards">
             <DashboardCard
               title="Monthly Budget"
@@ -204,7 +203,10 @@ const Dashboard = () => {
             </div>
 
             <div className="col-right">
-              <TransactionList transactions={transactions} />
+              <TransactionList 
+                transactions={transactions} 
+                onAddClick={() => setIsExpenseModalOpen(true)}
+              />
             </div>
           </div>
         </div>
@@ -216,6 +218,16 @@ const Dashboard = () => {
         onSubmit={handleModalSubmit}
         currentDate={currentDate}
         existingBudget={budget}
+      />
+
+      <ExpenseModal
+        isOpen={isExpenseModalOpen}
+        onClose={() => setIsExpenseModalOpen(false)}
+        onSuccess={(msg) => {
+          setToast({ message: msg, type: 'success' });
+          fetchBudget();
+        }}
+        currentDate={currentDate}
       />
 
       {toast && (

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import Expenses from './components/Expenses';
 import { ThemeProvider } from './context/ThemeContext';
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -17,6 +18,11 @@ function App() {
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/expenses" element={
+          <ProtectedRoute>
+            <Expenses />
           </ProtectedRoute>
         } />
         <Route path="/" element={

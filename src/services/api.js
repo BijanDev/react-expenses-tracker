@@ -56,8 +56,21 @@ export const api = {
     return response.json();
   },
 
-  getHistory: async () => {
-    const response = await fetch(`${API_BASE_URL}/budget/history-current-month`, {
+  getHistory: async (params = {}) => {
+    const { month, year, date } = params;
+    let url = `${API_BASE_URL}/budget/history-by-date`;
+    const queryParams = new URLSearchParams();
+    
+    if (month) queryParams.append('month', month);
+    if (year) queryParams.append('year', year);
+    if (date) queryParams.append('date', date);
+    
+    const queryString = queryParams.toString();
+    if (queryString) {
+      url += `?${queryString}`;
+    }
+
+    const response = await fetch(url, {
       method: 'GET',
       headers: getHeaders(),
     });
@@ -100,6 +113,19 @@ export const api = {
     });
     if (!response.ok) {
       throw new Error('Failed to fetch user profile');
+    }
+    return response.json();
+  },
+
+  addDailyExpense: async (data) => {
+    const response = await fetch(`${API_BASE_URL}/budget/add-daily-expense`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || 'Failed to add daily expense');
     }
     return response.json();
   }
