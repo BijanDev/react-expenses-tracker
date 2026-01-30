@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import Expenses from './components/Expenses';
+import BudgetPage from './components/BudgetPage';
 import { ThemeProvider } from './context/ThemeContext';
 
 import ProtectedRoute from './components/ProtectedRoute';
@@ -23,6 +24,11 @@ function App() {
         <Route path="/expenses" element={
           <ProtectedRoute>
             <Expenses />
+          </ProtectedRoute>
+        } />
+        <Route path="/budget" element={
+          <ProtectedRoute>
+            <BudgetPage />
           </ProtectedRoute>
         } />
         <Route path="/" element={

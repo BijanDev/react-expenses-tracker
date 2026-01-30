@@ -2,12 +2,12 @@
 
 :root {
   --primary-blue: #0ea5e9;
-  --bg-color: #ffffff;
+  --bg-color: #f8f8f8;
   --text-main: #1f2937;
   --text-secondary: #6b7280;
   --card-bg: #ffffff;
   --sidebar-width: 250px;
-  --border-color: #f3f4f6;
+  --border-color: #e2e8f0; /* Darker common border for visibility in light mode */
   --sidebar-bg: #ffffff;
   --hover-bg: #f8fafc;
   --active-bg: #e0f2fe;
@@ -49,7 +49,7 @@ body {
 .sidebar {
   width: var(--sidebar-width);
   background-color: var(--sidebar-bg);
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color); /* Use variable for dark mode support */
   display: flex;
   flex-direction: column;
   padding: 24px;
@@ -120,7 +120,7 @@ body {
 
 .sidebar-footer {
   margin-top: auto;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color); /* Use variable */
   padding: 20px 24px 0 24px;
   display: flex;
   align-items: center;
@@ -180,7 +180,7 @@ body {
 .main-content {
   margin-left: var(--sidebar-width);
   flex-grow: 1;
-  background-color: var(--bg-color);
+  background-color: var(--bg-color); /* Changed back to variable for dark mode support */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -190,7 +190,7 @@ body {
 .main-header {
   margin-bottom: 0px;
   /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); */
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color); /* Use variable */
   padding: 15px 40px;
   position: sticky;
   top: 0;
@@ -631,27 +631,41 @@ body {
   color: var(--text-main);
 }
 
-.modal-input {
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 14px;
-  color: var(--text-main);
-  background-color: var(--bg-color);
+/* Input Styles */
+.modern-input {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  border: 1px solid var(--border-color); /* Use variable */
+  border-radius: 50px;
+  background-color: var(--bg-color); /* Use variable */
   transition: all 0.2s;
+  box-sizing: border-box;
+  color: var(--text-main); /* Use variable */
 }
 
-.modal-input:focus {
+/* Remove number input arrows/spinners */
+.modern-input[type=number]::-webkit-inner-spin-button,
+.modern-input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.modern-input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.modern-input:focus {
   outline: none;
   border-color: var(--primary-blue);
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.modal-input::placeholder {
+.modern-input::placeholder {
   color: var(--text-secondary);
 }
 
-.modal-input:disabled {
+.modern-input:disabled {
   background-color: var(--hover-bg);
   cursor: not-allowed;
   opacity: 0.6;

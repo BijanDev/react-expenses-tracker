@@ -128,5 +128,40 @@ export const api = {
       throw new Error(errorData.detail || 'Failed to add daily expense');
     }
     return response.json();
+  },
+
+  setFixedMonthlyExpense: async (data) => {
+    const response = await fetch(`${API_BASE_URL}/budget/set-fixed-monthly-expense`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || 'Failed to set fixed monthly expense');
+    }
+    return response.json();
+  },
+
+  getFixedMonthlyExpenses: async () => {
+    const response = await fetch(`${API_BASE_URL}/budget/get-fixed-monthly-expenses`, {
+        method: 'GET',
+        headers: getHeaders(),
+    });
+    if (!response.ok) {
+        throw new Error('Failed to fetch fixed monthly expenses');
+    }
+    return response.json();
+  },
+
+  deleteFixedMonthlyExpense: async (id) => {
+    const response = await fetch(`${API_BASE_URL}/budget/delete-fixed-monthly-expense/${id}`, {
+        method: 'DELETE',
+        headers: getHeaders(),
+    });
+    if (!response.ok) {
+        throw new Error('Failed to delete fixed monthly expense');
+    }
+    return response.json();
   }
 };
